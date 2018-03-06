@@ -12,6 +12,7 @@ export default Ember.Component.extend({
 
   content: null,
   selected: null,
+  searchProperty: null,
   optionLabelKey: 'title',
   optionDisabledKey: null,
   sortBy: null,
@@ -80,6 +81,10 @@ export default Ember.Component.extend({
     set(key, value) {
       return value;
     }
+  }),
+
+  _searchProperty : Ember.computed('searchProperty',function() {
+    return this.get('searchProperty')
   }),
 
   _sortArray: Ember.computed('sortBy', function() {
@@ -254,7 +259,7 @@ export default Ember.Component.extend({
         this.set('_selected', item);
       }
 
-      this.checkForFunction(this.get('on-change')).call(this, this.get('_selected'));
+      this.checkForFunction(this.get('on-change')).call(this, this.get('_selected'),this.get('_searchProperty'));
 
       if (this.get('closeOnSelection')) {
         this.send('hideMenu');
@@ -293,7 +298,7 @@ export default Ember.Component.extend({
     },
     removeOption(option) {
       this.removeFromSelected(option);
-      this['on-change'].call(this, this.get('_selected'));
+      this['on-change'].call(this, this.get('_selected'),this.get('_searchProperty'));
     },
     addNew() {
       this.get('on-add')(this.get('_searchText'));
