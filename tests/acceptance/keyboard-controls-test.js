@@ -99,7 +99,7 @@ test('can select an item with the keyboard', function(assert) {
 
   andThen(function() {
     assert.ok(
-      document.activeElement.classList.contains('Searchable-select__option'),
+      document.activeElement.classList.includes('Searchable-select__option'),
       'down arrow moves foucs to next item'
     );
   });
@@ -126,7 +126,7 @@ test('can clear the selection with the keyboard', function(assert) {
 
   andThen(function() {
     assert.ok(
-      document.activeElement.classList.contains('Searchable-select__clear'),
+      document.activeElement.classList.includes('Searchable-select__clear'),
       'down arrow moves foucs to clear button'
     );
   });
@@ -158,7 +158,7 @@ test('can add a new item with the keyboard', function(assert) {
 
   andThen(function() {
     assert.ok(
-      document.activeElement.classList.contains('Searchable-select__add-new'),
+      document.activeElement.classList.includes('Searchable-select__add-new'),
       'down arrow moves foucs to add-new button'
     );
   });
