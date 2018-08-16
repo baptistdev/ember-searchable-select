@@ -211,10 +211,13 @@ export default Ember.Component.extend({
   _toggleSelection(item) {
     if (item === null) {
       this.set('_selected', Ember.A([]));
+      return null
     } else if (Ember.A(this.get('_selected')).includes(item)) {
       this.removeFromSelected(item);
+      return 'remove'
     } else {
       this.addToSelected(item);
+      return 'add'
     }
   },
 
@@ -250,16 +253,16 @@ export default Ember.Component.extend({
         // item is disabled, do nothing
         return;
       }
-
+      let operation = null;
       if (this.get('multiple')) {
         // add or remove item from selection
-        this._toggleSelection(item);
+        operation = this._toggleSelection(item);
       } else {
         // replace selection
         this.set('_selected', item);
       }
 
-      this.checkForFunction(this.get('on-change')).call(this, this.get('_selected'),this.get('_searchProperty'));
+      this.checkForFunction(this.get('on-change')).call(this, this.get('_selected'),this.get('_searchProperty'),item,operation);
 
       if (this.get('closeOnSelection')) {
         this.send('hideMenu');
@@ -298,7 +301,7 @@ export default Ember.Component.extend({
     },
     removeOption(option) {
       this.removeFromSelected(option);
-      this['on-change'].call(this, this.get('_selected'),this.get('_searchProperty'));
+      this['on-change'].call(this, this.get('_selected'),this.get('_searchProperty'),option,'remove');
     },
     addNew() {
       this.get('on-add')(this.get('_searchText'));
