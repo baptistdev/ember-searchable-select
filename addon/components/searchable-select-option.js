@@ -16,7 +16,7 @@ export default Ember.Component.extend({
   optionDisabledKey: null,
   selected: null,
   searchText: '',
-
+  icon : null,
   isDisabled: Ember.computed('option', 'optionDisabledKey', function() {
     if (this.get('optionDisabledKey')) {
       return Ember.get(this.get('option'), this.get('optionDisabledKey'));
